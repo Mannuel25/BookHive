@@ -54,3 +54,17 @@ def refresh_access_token(refresh_token: str):
     except (InvalidToken, TokenError) as e:
         raise ValueError(f"Token error: {str(e)}")
 
+
+
+def get_api():
+    """
+    Creates and returns a configured instance of NinjaAPI for this project
+    """
+    from ninja import NinjaAPI
+    return NinjaAPI(
+        title="BookHive API",
+        version="1.0.0",
+        description="Welcome to the BookHive API. This API provides endpoints for managing books, users, and related resources.",
+    )
+
+
