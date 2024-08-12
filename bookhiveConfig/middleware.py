@@ -16,13 +16,13 @@ class AuthMiddleware(MiddlewareMixin):
         """
         Process the incoming request to handle JWT authentication.
         """
-        # paths where the middleware should impact
-        PATHS_TO_CHECK = [
+        PROTECTED_ENDPOINTS = [
             re.compile(r'^/api/user_mgt/users/?$'),
             re.compile(r'^/api/user_mgt/users/\d+$'),
+            re.compile(r'^/api/book_mgt/books/\d+$'),
         ]
-        # check if the request path matches any of the patterns where the middleware should impact
-        if not any(pattern.match(request.path) for pattern in PATHS_TO_CHECK):
+        # check if the request path matches any of the protected endpoints
+        if not any(pattern.match(request.path) for pattern in PROTECTED_ENDPOINTS):
             return None # skip middleware for these paths
 
         # check if the Authorization header is in the correct format

@@ -138,14 +138,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser' 
 
-# cloudinary configurations..
-cloudinary.config( 
-    cloud_name = config('cloud_name'), 
-    api_key = config('api_key'),
-    api_secret = config('api_secret'),
-    secure = config('secure'),
-)
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),

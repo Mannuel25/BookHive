@@ -56,15 +56,15 @@ def refresh_access_token(refresh_token: str):
 
 
 
-def get_api():
+def get_api(title, description, version):
     """
-    Creates and returns a configured instance of NinjaAPI for this project
+    Creates and returns a customized instance of NinjaAPI for this project
     """
     from ninja import NinjaAPI
     return NinjaAPI(
-        title="BookHive API",
-        version="1.0.0",
-        description="Welcome to the BookHive API. This API provides endpoints for managing books, users, and related resources.",
+        title=title,
+        description=description,
+        version=version,
     )
 
 
