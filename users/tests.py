@@ -8,8 +8,7 @@ class UserTests(AuthSetupTestCase):
     """
     A test case class for handling user-related API tests.
 
-    This class inherits from AuthSetupTestCase to utilize the authenticated
-    setup. It includes various test cases for CRUD operations on the BookHive Users API.
+    This class inherits from AuthSetupTestCase. It includes various test cases for CRUD operations on the BookHive Users API.
     """
 
     def setUp(self):

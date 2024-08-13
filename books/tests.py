@@ -6,8 +6,7 @@ class BookTests(AuthSetupTestCase):
     """
     A test case class for handling book-related API tests.
 
-    This class inherits from AuthSetupTestCase to utilize the authenticated
-    setup. It includes various test cases for CRUD operations on the BookHive Books API.
+    This class inherits from AuthSetupTestCase. It includes various test cases for CRUD operations on the BookHive Books API.
     """
 
     def setUp(self):
