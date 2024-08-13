@@ -1,7 +1,6 @@
 from pydantic import BaseModel, EmailStr, field_validator, ValidationError
 from typing import Optional
 import django.contrib.auth.password_validation as validators
-from .models import 
 
 
 class UserSignupSchema(BaseModel):
