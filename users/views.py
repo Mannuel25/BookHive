@@ -8,6 +8,8 @@ from .schemas import *
 from bookhiveConfig.utils import get_api, generate_user_token, refresh_access_token, CustomResponse
 
 User = get_user_model()
+
+
 api = get_api(
     title="BookHive Users API",
     description="This documentation provides endpoints for managing all users.",
@@ -44,7 +46,8 @@ def signup(request, data: UserSignupSchema):
         )
         return CustomResponse.success(
             data=return_user_data(user),
-            message="Signup successful"
+            message="Signup successful",
+            status=201
         )
     except Exception as e:
         return CustomResponse.failed(message=str(e))
