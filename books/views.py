@@ -44,7 +44,7 @@ def create_book(request, data: BookCreateSchema):
             tag=data.tag,
             owner=request.user if data.tag != 'admin' else None
         )
-        return CustomResponse.success(data=return_book_data(book), message="Book created successfully")
+        return CustomResponse.success(data=return_book_data(book), message="Book created successfully", status=201)
     except Exception as e:
         return CustomResponse.failed(message=str(e))
 
