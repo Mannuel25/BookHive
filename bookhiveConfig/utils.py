@@ -1,6 +1,10 @@
+import json
 from django.http import JsonResponse
+from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework.test import APITestCase, APIClient
+from users.models import CustomUser
 
 
 class CustomResponse:
@@ -66,5 +70,41 @@ def get_api(title, description, version):
         description=description,
         version=version,
     )
+
+
+class AuthSetupTestCase(APITestCase):
+    """
+    A test case class for handling authentication setup.
+
+    This class sets up a test client with authenticated credentials, allowing
+    derived test cases to interact with the API as an authenticated user. It 
+    creates a user and logs them in to obtain an authentication token, which 
+    is then used to set the client’s authorization headers for subsequent tests.
+    """
+
+    def authenticate(self):
+        self.client = APIClient()
+        # create a user 
+        self.user = CustomUser.objects.create_user(
+            email='johh_doe@gmail.com',
+            first_name='John',
+            last_name='Doe',
+            password='John_doe!3',
+            is_active=True
+        )
+        # authenticate the user and get the token
+        login_url = "/api/user_mgt/login"
+        response = self.client.post(
+            login_url,
+            data=json.dumps({
+                "email": "johh_doe@gmail.com",
+                "password": "John_doe!3"
+            }),
+            content_type='application/json'
+        )
+        response_data = response.json()
+        access_token = response_data.get('data', {}).get('access')
+        self.token = f"Bearer {access_token}"
+        self.client.credentials(HTTP_AUTHORIZATION=self.token)
 
 
