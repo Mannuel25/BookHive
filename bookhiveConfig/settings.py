@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os, cloudinary, dj_database_url
+import os, dj_database_url
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
