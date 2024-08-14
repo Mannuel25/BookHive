@@ -4,10 +4,11 @@ from django.db import transaction
 from typing import List
 from .models import Book
 from .schemas import *
-from bookhiveConfig.utils import get_api, CustomResponse
+from bookhiveConfig.auth import *
+from bookhiveConfig.utils import CustomResponse
 
 
-api = get_api(
+api = CustomNinjaAPI.create_api(
     title="BookHive Books API",
     description="This documentation provides endpoints for managing all books.",
     version="1.0.1"
@@ -28,14 +29,10 @@ def return_book_data(book):
     ).dict()
 
 
-@api.post("/books", response=BookResponseSchema)
+@api.post("/books", response=BookResponseSchema, auth=BearerAuth())
 @transaction.atomic
 def create_book(request, data: BookCreateSchema):
     try:
-        # ensure a user is authenticated before creating a book
-        if not request.user.is_authenticated:
-            return CustomResponse.failed(message="Kindly login to create a book.", status=403)
-
         book = Book.objects.create(
             title=data.title,
             author=data.author,
@@ -83,7 +80,7 @@ def get_all_books(request, page=1, size=10, id=None, title=None, author=None, ta
         return CustomResponse.failed(message=str(e))
 
 
-@api.get("/books/{book_id}", response=BookResponseSchema)
+@api.get("/books/{book_id}", response=BookResponseSchema, auth=BearerAuth())
 def get_book_by_id(request, book_id):
     try:
         book = get_object_or_404(Book, id=book_id)
@@ -92,7 +89,7 @@ def get_book_by_id(request, book_id):
         return CustomResponse.failed(message=str(e))
 
 
-@api.patch("/books/{book_id}", response=BookResponseSchema)
+@api.patch("/books/{book_id}", response=BookResponseSchema, auth=BearerAuth())
 def update_book(request, book_id, data: BookUpdateSchema):
     try:
         book = get_object_or_404(Book, id=book_id)
@@ -109,8 +106,8 @@ def update_book(request, book_id, data: BookUpdateSchema):
         return CustomResponse.failed(message=str(e))
 
 
-@api.put("/books/{book_id}", response=BookResponseSchema)
-def replace_book(request, book_id, data: BookUpdateSchema):
+@api.put("/books/{book_id}", response=BookResponseSchema, auth=BearerAuth())
+def put_book(request, book_id, data: BookUpdateSchema):
     try:
         book = get_object_or_404(Book, id=book_id)
         # Check if the logged-in "user" is the owner of the book or if the book is an admin book
@@ -128,7 +125,7 @@ def replace_book(request, book_id, data: BookUpdateSchema):
         return CustomResponse.failed(message=str(e))
 
 
-@api.delete("/books/{book_id}", response=dict)
+@api.delete("/books/{book_id}", response=dict, auth=BearerAuth())
 def delete_book(request, book_id):
     try:
         book = get_object_or_404(Book, id=book_id)

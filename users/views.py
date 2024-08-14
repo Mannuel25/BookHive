@@ -5,12 +5,13 @@ from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.hashers import check_password
 from .schemas import *
-from bookhiveConfig.utils import get_api, generate_user_token, refresh_access_token, CustomResponse
+from bookhiveConfig.auth import *
+from bookhiveConfig.utils import generate_user_token, refresh_access_token, CustomResponse
 
 User = get_user_model()
 
 
-api = get_api(
+api = CustomNinjaAPI.create_api(
     title="BookHive Users API",
     description="This documentation provides endpoints for managing all users.",
     version="1.0.0"
@@ -85,7 +86,7 @@ def login_user(request, data: UserLoginSchema):
     )
 
 
-@api.get("/users", response=List[UserResponseSchema])
+@api.get("/users", response=List[UserResponseSchema], auth=BearerAuth())
 def get_all_users(request, page=1, size=10, id=None, email=None, first_name=None, last_name=None):
     try:
         # only admins and superusers can view all users..
@@ -126,7 +127,7 @@ def get_all_users(request, page=1, size=10, id=None, email=None, first_name=None
     except Exception as e: return CustomResponse.failed(message=str(e))
 
 
-@api.get("/users/{user_id}", response=UserResponseSchema)
+@api.get("/users/{user_id}", response=UserResponseSchema, auth=BearerAuth())
 def get_user_by_id(request, user_id):
     try:
         user = get_object_or_404(User, id=user_id)
@@ -136,7 +137,7 @@ def get_user_by_id(request, user_id):
         return CustomResponse.failed(message=str(e))
 
 
-@api.patch("/users/{user_id}", response=UserResponseSchema)
+@api.patch("/users/{user_id}", response=UserResponseSchema, auth=BearerAuth())
 def patch_user(request, user_id, data: UserUpdateSchema):
     try:
         user = get_object_or_404(User, id=user_id)
@@ -150,7 +151,7 @@ def patch_user(request, user_id, data: UserUpdateSchema):
         return CustomResponse.failed(message=str(e))
 
 
-@api.put("/users/{user_id}", response=UserResponseSchema)
+@api.put("/users/{user_id}", response=UserResponseSchema, auth=BearerAuth())
 def put_user(request, user_id, data: UserUpdateSchema):
     try:
         user = get_object_or_404(User, id=user_id)
@@ -165,7 +166,7 @@ def put_user(request, user_id, data: UserUpdateSchema):
         return CustomResponse.failed(message=str(e))
 
 
-@api.delete("/users/{user_id}", response=dict)
+@api.delete("/users/{user_id}", response=dict, auth=BearerAuth())
 def delete_user(request, user_id):
     try:
         user = get_object_or_404(User, id=user_id)
