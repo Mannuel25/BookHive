@@ -9,7 +9,7 @@ class Book(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='books')
     # it can be admin/custom..if it's admin, then the owner would be null
     # else, if it's custom the owner would be populated..just basically to 
-    # knoww which books were uplaoded by the admins(or superusers)/normal users
+    # know which books were uploaded by the admins(or superusers)/normal users
     tag = models.CharField(max_length=6, default="admin")
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
