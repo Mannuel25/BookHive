@@ -68,7 +68,7 @@ Built with Django, Django Ninja, and Pydantic, BookHive leverages PostgreSQL for
 
 4. **Configure the Database**
 
-   Update `DATABASES` settings in `bookhive/settings.py` to match your PostgreSQL configuration.
+   Update `DATABASES` settings in `bookhiveConfig/settings.py` to match your PostgreSQL configuration.
 
 5. **Apply Migrations**
 
