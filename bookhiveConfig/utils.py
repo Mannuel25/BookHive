@@ -1,6 +1,5 @@
 import json
 from django.http import JsonResponse
-from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework.test import APITestCase, APIClient
@@ -57,19 +56,6 @@ def refresh_access_token(refresh_token: str):
         }
     except (InvalidToken, TokenError) as e:
         raise ValueError(f"Token error: {str(e)}")
-
-
-
-def get_api(title, description, version):
-    """
-    Creates and returns a customized instance of NinjaAPI for this project
-    """
-    from ninja import NinjaAPI
-    return NinjaAPI(
-        title=title,
-        description=description,
-        version=version,
-    )
 
 
 class AuthSetupTestCase(APITestCase):
