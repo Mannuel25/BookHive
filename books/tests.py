@@ -61,7 +61,7 @@ class BookTests(AuthSetupTestCase):
             "author": "Updated Author",
             "publication_date": "2024-02-01",
             "isbn": "9876543210987",
-            "tag": "user",
+            "tag": "admin",
         }, format='json')
         self.assertEqual(response.status_code, 200)
 
