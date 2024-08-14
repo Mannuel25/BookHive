@@ -2,7 +2,7 @@ from ninja import NinjaAPI
 from ninja.security import HttpBearer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from ninja import Redoc
+
 
 class BearerAuth(HttpBearer):
     def authenticate(self, request, token: str):
@@ -25,7 +25,6 @@ class CustomNinjaAPI(NinjaAPI):
             auth=None, 
             title=title,
             description=description,
-            version=version,
-            # docs=Redoc()
+            version=version
         )
 
