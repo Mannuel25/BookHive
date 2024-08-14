@@ -5,7 +5,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     publication_date = models.DateField()
-    isbn = models.CharField(max_length=13)
+    isbn = models.CharField(max_length=25)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='books')
     # it can be admin/custom..if it's admin, then the owner would be null
     # else, if it's custom the owner would be populated..just basically to 
