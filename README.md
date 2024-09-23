@@ -70,19 +70,26 @@ Built with Django, Django Ninja, and Pydantic, BookHive leverages PostgreSQL for
 
    Update `DATABASES` settings in `bookhiveConfig/settings.py` to match your PostgreSQL configuration.
 
-5. **Apply Migrations**
+
+5. **Make Migrations**
+
+   ```bash
+   python manage.py makemigrations
+   ```
+
+6. **Apply Migrations**
 
    ```bash
    python manage.py migrate
    ```
 
-6. **Create a Superuser (Optional)**
+7. **Create a Superuser (Optional)**
 
    ```bash
    python manage.py createsuperuser
    ```
 
-7. **Run the Development Server**
+8. **Run the Development Server**
 
    ```bash
    python manage.py runserver
